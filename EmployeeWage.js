@@ -72,3 +72,10 @@ function totalWages(totalWage, dailyWage){
     return totalWage + dailyWage;
 }
 console.log("Monthly Employee Wage using Reduce : Rs " + employeeDailyWageArray.reduce(totalWages, 0));
+
+function fullTimeWages(dailyWage){
+    return dailyWage.includes("160");
+}
+let fullTimeWageArray = dayToDailyWageMapArray.filter(fullTimeWages);
+console.log("Daily Wages when employees worked Full Time : ");
+console.log(fullTimeWageArray);
