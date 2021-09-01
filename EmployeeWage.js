@@ -15,30 +15,42 @@ const IS_PART_TIME = 1;
 const IS_FULL_TIME = 2;
 const PART_TIME_HOURS = 4;
 const FULL_TIME_HOURS = 8;
-const WAGE_PER_HOURS = 20;
-const NUM_OF_WORKING_DAY = 20;
-const MAX_HRS_IN_MONTH = 100;
+const WAGE_PER_HOUR = 20;
+const TOTAL_MONTHLY_WORKING_DAYS = 20;
+const TOTAL_MONTHLY_WORKING_HOURS = 160;
 
-//UC5 - Calculating Wages till Number of Working Days Reached.
-
-function getWorkingHours(empCheck){
-  switch(empCheck){
-    case IS_PART_TIME:
-      return PART_TIME_HOURS;
-    case IS_FULL_TIME:
-      return FULL_TIME_HOURS;
-    default:
-      return 0;    
-  
+function getWorkingHours(employeeCheck) {
+    switch(employeeCheck){
+        case IS_PART_TIME :
+            return PART_TIME_HOURS;
+        case IS_FULL_TIME :
+            return FULL_TIME_HOURS;
+        default :
+            return 0;
     }
 }
-let totalEmpHr = 0;
-let totalWorkingDay = 0;
-while(totalEmpHr <= MAX_HRS_IN_MONTH &&
-   totalWorkingDay < NUM_OF_WORKING_DAY ){
-  totalWorkingDay++;
-  let empCheck = Math.floor(Math.random()*10)%3;
-  totalEmpHr += getWorkingHours(empCheck);
+
+function calculateWage(employeeHours) {
+    return employeeHours * WAGE_PER_HOUR;
 }
-let empWage = totalEmpHr * WAGE_PER_HOURS;
-console.log("UC5 --> Total Day: "+totalWorkingDay+ " Total Emp Hrs: "+totalEmpHr+ " Emp Wage: "+empWage );
+
+let totalEmployeeHours = 0;
+let totalWorkingDays = 0;
+let employeeDailyWageArray = new Array();
+
+while(totalEmployeeHours <= TOTAL_MONTHLY_WORKING_HOURS && 
+      totalWorkingDays < TOTAL_MONTHLY_WORKING_DAYS) {
+
+    let employeeCheck = Math.floor(Math.random() * 10) % 3;
+    let employeeHours = getWorkingHours(employeeCheck);
+    totalEmployeeHours += employeeHours;
+    employeeDailyWageArray.push(calculateWage(employeeHours));
+    totalWorkingDays++;
+}
+
+let totalEmployeeWage = calculateWage(totalEmployeeHours);
+console.log("Daily Wages : " + employeeDailyWageArray);
+console.log("Total Days : " + totalWorkingDays + "\t" 
+          + "Total Working Hours : " 
+          + (totalEmployeeHours > 160 ? 160 : totalEmployeeHours));
+console.log("Monthly Employee Wage : Rs " + totalEmployeeWage);
