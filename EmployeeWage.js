@@ -30,8 +30,8 @@ function getWorkingHours(employeeCheck) {
     }
 }
 
-function calculateWage(employeeHours) {
-    return employeeHours * WAGE_PER_HOUR;
+function calculateDailyWage(employeeHours) {
+  return employeeHours * WAGE_PER_HOUR;
 }
 
 let totalEmployeeHours = 0;
@@ -39,18 +39,28 @@ let totalWorkingDays = 0;
 let employeeDailyWageArray = new Array();
 
 while(totalEmployeeHours <= TOTAL_MONTHLY_WORKING_HOURS && 
-      totalWorkingDays < TOTAL_MONTHLY_WORKING_DAYS) {
+    totalWorkingDays < TOTAL_MONTHLY_WORKING_DAYS) {
 
-    let employeeCheck = Math.floor(Math.random() * 10) % 3;
-    let employeeHours = getWorkingHours(employeeCheck);
-    totalEmployeeHours += employeeHours;
-    employeeDailyWageArray.push(calculateWage(employeeHours));
-    totalWorkingDays++;
+  let employeeCheck = Math.floor(Math.random() * 10) % 3;
+  let employeeHours = getWorkingHours(employeeCheck);
+  totalEmployeeHours += employeeHours;
+  employeeDailyWageArray.push(calculateDailyWage(employeeHours));
+  totalWorkingDays++;
 }
 
-let totalEmployeeWage = calculateWage(totalEmployeeHours);
 console.log("Daily Wages : " + employeeDailyWageArray);
 console.log("Total Days : " + totalWorkingDays + "\t" 
-          + "Total Working Hours : " 
-          + (totalEmployeeHours > 160 ? 160 : totalEmployeeHours));
-console.log("Monthly Employee Wage : Rs " + totalEmployeeWage);
+        + "Total Working Hours : " 
+        + (totalEmployeeHours > 160 ? 160 : totalEmployeeHours));
+
+let totalEmployeeWage = 0;
+function sum(dailyWage){
+  totalEmployeeWage += dailyWage;
+}
+employeeDailyWageArray.forEach(sum);
+console.log("Monthly Employee Wage using ForEach : Rs " + totalEmployeeWage);
+
+function totalWages(totalWage, dailyWage){
+  return totalWage + dailyWage;
+}
+console.log("Monthly Employee Wage using Reduce : Rs " + employeeDailyWageArray.reduce(totalWages, 0));
