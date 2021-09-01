@@ -1,16 +1,3 @@
-//UC1
-{
-    const IS_ABSENT = 0;
-    let empCheck = Math.floor(Math.random()*10)%2;
-    if (empCheck==IS_ABSENT){
-    console.log("UC1 - employee is Absent. Exiting the program");
-    return;
-    }else{
-      console.log("UC1 - employee is Present");
-    }
-}
-
-
 const IS_PART_TIME = 1;
 const IS_FULL_TIME = 2;
 const PART_TIME_HOURS = 4;
@@ -79,3 +66,6 @@ function fullTimeWages(dailyWage){
 let fullTimeWageArray = dayToDailyWageMapArray.filter(fullTimeWages);
 console.log("Daily Wages when employees worked Full Time : ");
 console.log(fullTimeWageArray);
+
+console.log("Employee worked Full Time First on : ");
+console.log(dayToDailyWageMapArray.find(fullTimeWages));
