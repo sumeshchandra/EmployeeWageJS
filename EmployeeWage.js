@@ -24,6 +24,7 @@ function calculateDailyWage(employeeHours) {
 let totalEmployeeHours = 0;
 let totalWorkingDays = 0;
 let employeeDailyWageArray = new Array();
+let employeeDailyWageMap = new Map();
 
 while(totalEmployeeHours <= TOTAL_MONTHLY_WORKING_HOURS && 
       totalWorkingDays < TOTAL_MONTHLY_WORKING_DAYS) {
@@ -33,6 +34,7 @@ while(totalEmployeeHours <= TOTAL_MONTHLY_WORKING_HOURS &&
     totalEmployeeHours += employeeHours;
     employeeDailyWageArray.push(calculateDailyWage(employeeHours));
     totalWorkingDays++;
+    employeeDailyWageMap.set(totalWorkingDays, calculateDailyWage(employeeHours));
 }
 
 
@@ -42,8 +44,11 @@ function dayToDailyWageMap(dailyWage) {
     return "Day " + dayCounter + " = Rs " + dailyWage;
 }
 let dayToDailyWageMapArray = employeeDailyWageArray.map(dayToDailyWageMap);
-console.log("Daily Wage Map :");
+console.log("Daily Wage Map using Array Map Helper functions :");
 console.log(dayToDailyWageMapArray);
+
+console.log("Daily Wage Map using Maps :");
+console.log(employeeDailyWageMap);
 
 
 console.log("Total Days : " + totalWorkingDays + "\t" 
@@ -62,7 +67,10 @@ console.log("Monthly Employee Wage using ForEach : Rs " + totalEmployeeWage);
 function totalWages(totalWage, dailyWage){
     return totalWage + dailyWage;
 }
-console.log("Monthly Employee Wage using Reduce : Rs " + employeeDailyWageArray.reduce(totalWages, 0));
+console.log("Monthly Employee Wage using Arrays Reduce : Rs " + employeeDailyWageArray.reduce(totalWages, 0));
+
+console.log("Monthly Employee Wage using Maps Reduce : Rs " + 
+            Array.from(employeeDailyWageMap.values()).reduce(totalWages, 0));
 
 
 function fullTimeWages(dailyWage) {
