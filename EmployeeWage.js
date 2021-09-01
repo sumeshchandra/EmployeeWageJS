@@ -25,16 +25,18 @@ let totalEmployeeHours = 0;
 let totalWorkingDays = 0;
 let employeeDailyWageArray = new Array();
 let employeeDailyWageMap = new Map();
+let employeeDailyHoursMap = new Map();
 
 while(totalEmployeeHours <= TOTAL_MONTHLY_WORKING_HOURS && 
       totalWorkingDays < TOTAL_MONTHLY_WORKING_DAYS) {
-
+    
+    totalWorkingDays++;
     let employeeCheck = Math.floor(Math.random() * 10) % 3;
     let employeeHours = getWorkingHours(employeeCheck);
     totalEmployeeHours += employeeHours;
     employeeDailyWageArray.push(calculateDailyWage(employeeHours));
-    totalWorkingDays++;
     employeeDailyWageMap.set(totalWorkingDays, calculateDailyWage(employeeHours));
+    employeeDailyHoursMap.set(totalWorkingDays, employeeHours);
 }
 
 
@@ -100,3 +102,27 @@ function totalDaysWorked(numberOfDays, dailyWage){
 }
 console.log("Number of Days Employee Worked  : "
              + employeeDailyWageArray.reduce(totalDaysWorked, 0));
+
+//Arrow Functions
+console.log("\nUSING ARROW FUNCTIONS : ")
+const findTotal = (totalValue, dailyValue) => {
+    return totalValue + dailyValue;
+}
+let fullTimeWorkingDays = new Array();
+let partTimeWorkingDays = new Array();
+let nonWorkingDays = new Array();
+
+let totalWage = employeeDailyWageArray.filter(dailyWage => dailyWage > 0)
+                                      .reduce(findTotal, 0);
+let totalHours = Array.from(employeeDailyHoursMap.values()).reduce(findTotal, 0);
+employeeDailyHoursMap.forEach((hours, day) => {
+    if(hours == 8) fullTimeWorkingDays.push(day);
+    else if(hours == 4) partTimeWorkingDays.push(day);
+    else nonWorkingDays.push(day);
+});
+console.log("Total Days:" + employeeDailyWageArray.length + 
+            " Total Hours:" + totalHours + 
+            " Total Wage:" + totalWage);
+console.log("Full Time Working Days : " + fullTimeWorkingDays);
+console.log("Part Time Working Days : " + partTimeWorkingDays);
+console.log("Non Working Days : " + nonWorkingDays);
